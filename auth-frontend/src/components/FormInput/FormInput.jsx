@@ -22,9 +22,13 @@ const FormInput = forwardRef(({ label, name, type, onChange }, ref) => {
     },
   }));
 
+  // Function to handle changes to the input value
   const handleChange = (e) => {
     const { value } = e.target;
 
+    setValue(value);
+    setError("");
+    
     if (value.length === 0) {
       setError("This field is required");
     }
@@ -43,14 +47,13 @@ const FormInput = forwardRef(({ label, name, type, onChange }, ref) => {
         name={name}
         type={type}
         id={inputId}
+        value={value}
         onChange={handleChange}
         // Using css var to change the color of the border
         style={{ "--input-border-color": error ? "#FF6B6B" : "#06D6A0" }}
       />
       <label
-        className={`form-group__label ${
-          value ? "form-group__label--filled" : ""
-        }`}
+        className={`form-group__label ${value && "form-group__label--filled"}`}
         htmlFor={inputId}
       >
         {label}

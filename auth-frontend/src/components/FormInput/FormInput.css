@@ -46,6 +46,11 @@
   padding: 0 4px;
 }
 
+.form-group__label--filled {
+  transform: translate(-40px, -36px) scale(0.8);
+  padding: 0 4px;
+}
+
 .form-group__error {
   position: relative;
   font-size: 12px;

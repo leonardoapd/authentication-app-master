@@ -1,4 +1,4 @@
 export function checkColorPreferences() {
-  let itIsDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-  return itIsDark ? true : false;
+  let isItDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+  return isItDark ? "dark" : "light";
 }
