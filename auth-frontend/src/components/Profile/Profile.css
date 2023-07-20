@@ -1,0 +1,89 @@
+.profile {
+    width: 100%;
+}
+
+
+.profile div {
+    display: flex;
+    justify-content: space-between;
+    padding: 32px;
+    border-bottom: 1px solid var(--border-color-light, #06d6a0);
+    align-items: center;
+}
+
+.profile div h3 {
+    font-size: 13px;
+    font-weight: 500;
+    color: #BDBDBD;
+    text-transform: uppercase;
+    line-height: 18px;
+}
+
+.profile div p {
+    font-size: 16px;
+    font-weight: 500;
+    /* color: #333; */
+    line-height: 22px;
+}
+
+.profile .profile__header {
+    border-bottom: none;
+}
+
+.profile__title {
+    font-size: 24px;
+    font-weight: 400;
+    line-height: 32px;
+    /* color: #000; */
+}
+
+.profile__edit-button {
+    background-color: transparent;
+    padding: 8px;
+    border: 1px solid var(--icons-color, #06d6a0);
+    border-radius: 12px;
+    width: 25%;
+    color: var(--icons-color);
+}
+
+.profile__photo {
+
+}
+
+.profile__image {
+    width: 72px;
+    height: 72px;
+    border-radius: 8px;
+}
+
+.profile__name {
+    /* Estilos para el elemento 'name' dentro del bloque 'profile' */
+}
+
+.profile__bio {
+    /* Estilos para el elemento 'bio' dentro del bloque 'profile' */
+}
+
+.profile__phone {
+    /* Estilos para el elemento 'phone' dentro del bloque 'profile' */
+}
+
+.profile__email {
+    /* Estilos para el elemento 'email' dentro del bloque 'profile' */
+}
+
+.profile__password {
+    /* Estilos para el elemento 'password' dentro del bloque 'profile' */
+}
+
+@media screen and (min-width: 768px) {
+    .profile {
+        border: 1px solid var(--border-color-light, #06d6a0);
+        border-radius: 12px;
+        width: 55%;
+    }
+
+    .profile .profile__header {
+        border-bottom: 1px solid var(--border-color-light, #06d6a0);
+    }
+}
