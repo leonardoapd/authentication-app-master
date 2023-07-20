@@ -3,6 +3,7 @@
   position: relative;
   display: flex;
   flex-direction: column;
+  margin-top: 8px;
 }
 
 .form-group__icon {
@@ -26,7 +27,7 @@
 
 .form-group__label {
   position: absolute;
-  background-color: white;
+  /* background-color: white; */
   top: 12px;
   left: 42px;
   pointer-events: none;
@@ -41,7 +42,7 @@
 
 .form-group__label--filled + .form-group__input,
 .form-group__input:focus + .form-group__label {
-  transform: translate(-32px, -24px) scale(0.8);
+  transform: translate(-40px, -36px) scale(0.8);
   padding: 0 4px;
 }
 

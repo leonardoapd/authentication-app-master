@@ -1,29 +1,43 @@
 @import url(https://fonts.googleapis.com/css?family=Noto+Sans:100,100italic,200,200italic,300,300italic,regular,italic,500,500italic,600,600italic,700,700italic,800,800italic,900,900italic);
 
 :root {
-    /* Color Palette */
-    --light-background: #F5F5F5;
-    --dark-background: #212121;
-    --border-color: #BDBDBD;
-    --icons-color: #828282;
-    --textfield-text-color: #828282;
-    --button-background-color: #2F80ED;
+  /* Color Palette */
+  --light-background: #f5f5f5;
+  --dark-background: #212121;
+  --border-color: #bdbdbd;
+  --icons-color: #828282;
+  --textfield-text-color: #828282;
+  --button-background-color: #2f80ed;
 
-    /* Font */
-    font-family: 'Noto Sans', sans-serif;
+  /* Font */
+  font-family: "Noto Sans", sans-serif;
+
+  /* Color Scheme */
+  color-scheme: light;
+  color: var(--dark-background);
+  background-color: var(--light-background);
 }
 
 * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 
-    /* Remove default outline */
-    outline: none;
+  /* Remove default outline */
+  outline: none;
 }
 
 html {
-    display: grid;
-    place-items: center;
-    height: 100%;
+  display: grid;
+  place-items: center;
+  align-content: center;
+  height: 100%;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+    color: var(--light-background);
+    background-color: var(--dark-background);
+  }
 }

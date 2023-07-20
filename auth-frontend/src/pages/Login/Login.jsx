@@ -1,13 +1,24 @@
 import { Link, useNavigate } from "react-router-dom";
+import { useColorMode } from "../../context/ColorModeContext";
 import FormInput from "../../components/FormInput/FormInput";
+import Logo from "../../components/Logo/Logo";
 import images from "../../constants/images";
 import "./Login.css";
 
 function Login() {
+  const { isDarkMode } = useColorMode();
+
   return (
     <main className="container">
-      <img src={images.logo} alt="Devchallenges logo" />
-      <h2 className="container__heading">Login</h2>
+      <Logo isDarkMode={isDarkMode} />
+      <h2
+        className={`container__heading ${
+          isDarkMode === "dark" ? "dark" : "light"
+        }`}
+      >
+        {" "}
+        Login{" "}
+      </h2>
       <form action="" className="form">
         <FormInput
           label="Email"
