@@ -1,5 +1,6 @@
 import Profile from '../../components/Profile/Profile';
 import { useColorMode } from '../../context/ColorModeContext';
+import Navbar from '../../components/Navbar/Navbar';
 import './PersonalInfo.css';
 
 export default function PersonalInfo() {
@@ -7,6 +8,7 @@ export default function PersonalInfo() {
 
 	return (
 		<>
+			<Navbar />
 			<main className='personal-info'>
 				<h1 className={`personal-info__title ${isDarkMode}`}> Personal Info</h1>
 				<p className={`personal-info__text ${isDarkMode}`}>

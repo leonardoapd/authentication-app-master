@@ -1,6 +1,7 @@
 import EditProfileForm from '../../components/EditProfileForm/EditProfileForm';
 import { Link } from 'react-router-dom';
 import { useColorMode } from '../../context/ColorModeContext';
+import Navbar from '../../components/Navbar/Navbar';
 import './EditInfo.css';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 
@@ -9,6 +10,7 @@ export default function EditInfo() {
 
 	return (
 		<>
+			<Navbar />
 			<div className='edit-info__back-container'>
 				<Link
 					to='/personal-info'
