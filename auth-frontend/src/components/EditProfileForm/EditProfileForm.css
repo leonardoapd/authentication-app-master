@@ -1,0 +1,70 @@
+/* Add these styles to your existing CSS or create a new CSS file for the textarea */
+.textarea-group {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    margin-top: 8px;
+}
+
+.textarea-group__icon {
+    position: absolute;
+    top: 12px;
+    left: 10px;
+    width: 24px;
+    color: var(--icons-color, #06d6a0);
+}
+
+.textarea-group__textarea {
+    background-color: transparent;
+    border: 1px solid var(--border-color, #06d6a0);
+    padding: 16px;
+    border-radius: 8px;
+    min-width: 350px;
+    text-indent: 28px;
+    width: 100%;
+    resize: vertical;
+    /* Allow the textarea to be resized vertically */
+    /* Add any other specific textarea styles here */
+}
+
+.textarea-group__label {
+    position: absolute;
+    top: 12px;
+    left: 42px;
+    pointer-events: none;
+    color: var(--textfield-text-color, #06d6a0);
+    transition: transform 0.3s ease;
+}
+
+.textarea-group__textarea:focus,
+.textarea-group__textarea:focus+.textarea-group__label {
+    border-color: #06d6a0;
+}
+
+/* Apply the label transformation styles when textarea is focused or has content */
+.textarea-group__label--filled+.textarea-group__textarea,
+.textarea-group__textarea:focus+.textarea-group__label {
+    transform: translate(-40px, -36px) scale(0.8);
+    padding: 0 4px;
+}
+
+.textarea-group__label--filled {
+    transform: translate(-40px, -36px) scale(0.8);
+    padding: 0 4px;
+}
+
+.textarea-group__error {
+    position: relative;
+    font-size: 12px;
+    color: #ff6b6b;
+    margin-top: 4px;
+    left: 12px;
+}
+
+
+@media screen and (min-width: 768px) {
+    .edit-form__button {
+        width: 20%;
+        justify-self: flex-end;
+    }
+}

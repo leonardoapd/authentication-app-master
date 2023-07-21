@@ -44,6 +44,7 @@
     border-radius: 12px;
     width: 25%;
     color: var(--icons-color);
+    cursor: pointer;
 }
 
 .profile__photo {

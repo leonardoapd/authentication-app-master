@@ -4,6 +4,7 @@ import facebookIcon from "../assets/facebook.svg";
 import githubIcon from "../assets/github.svg";
 import googleIcon from "../assets/google.svg";
 import twitterIcon from "../assets/twitter.svg";
+import user from "../assets/user.png";
 
 const images = {
     logo,
@@ -12,6 +13,7 @@ const images = {
     githubIcon,
     googleIcon,
     twitterIcon,
+    user,
 };
 
 export default images;

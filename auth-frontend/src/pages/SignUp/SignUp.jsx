@@ -2,7 +2,7 @@
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import { useColorMode } from '../../context/ColorModeContext';
-import FormInput from '../../Components/FormInput/FormInput';
+import FormInput from '../../components/FormInput/FormInput';
 import Logo from '../../components/Logo/Logo';
 import SocialButton from '../../components/SocialButton/SocialButton';
 import { UserCredentials } from '../../models/user-credentials';

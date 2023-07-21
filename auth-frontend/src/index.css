@@ -33,6 +33,7 @@
   place-items: center;
   align-content: center;
   min-height: 100vh;
+  gap: 16px;
 }
 
 @media (prefers-color-scheme: dark) {
