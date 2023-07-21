@@ -1,0 +1,23 @@
+.footer {
+    display: flex;
+    width: 100vw;
+    justify-content: space-between;
+    padding: 16px;
+    color: var(--textfield-text-color, #333);
+}
+
+.footer__author {
+    text-decoration: underline;
+}
+
+.footer__dev-challenges {
+    text-decoration: none;
+    color: var(--textfield-text-color, #333)
+}
+
+
+@media screen and (min-width: 768px) {
+    .footer {
+        max-width: 55%;
+    }
+}

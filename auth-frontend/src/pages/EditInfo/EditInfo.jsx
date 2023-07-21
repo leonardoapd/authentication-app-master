@@ -2,6 +2,7 @@ import EditProfileForm from '../../components/EditProfileForm/EditProfileForm';
 import { Link } from 'react-router-dom';
 import { useColorMode } from '../../context/ColorModeContext';
 import Navbar from '../../components/Navbar/Navbar';
+import Footer from '../../components/Footer/Footer';
 import './EditInfo.css';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 
@@ -32,6 +33,7 @@ export default function EditInfo() {
 				</main>
 				<EditProfileForm />
 			</div>
+			<Footer />
 		</>
 	);
 }
