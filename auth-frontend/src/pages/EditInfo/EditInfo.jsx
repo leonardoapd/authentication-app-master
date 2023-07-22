@@ -33,7 +33,6 @@ export default function EditInfo() {
 				</main>
 				<EditProfileForm />
 			</div>
-			<Footer />
 		</>
 	);
 }

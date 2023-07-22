@@ -21,7 +21,6 @@ export default function PersonalInfo() {
 				</p>
 			</main>
 			<Profile />
-			<Footer />
 		</>
 	);
 }
