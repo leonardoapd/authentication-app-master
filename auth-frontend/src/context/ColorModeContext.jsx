@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect } from "react";
-import { checkColorPreferences } from "../utils/helpers";
+import { checkColorPreferences } from "../utils/color-mode-helper";
 
 const ColorModeContext = createContext();
 
