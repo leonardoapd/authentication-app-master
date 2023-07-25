@@ -6,6 +6,7 @@ import FormInput from '../../components/FormInput/FormInput';
 import Logo from '../../components/Logo/Logo';
 import SocialButton from '../../components/SocialButton/SocialButton';
 import { UserCredentials } from '../../models/user-credentials';
+import { register } from '../../services/user-services';
 import images from '../../constants/images';
 import './SignUp.css';
 
@@ -22,7 +23,13 @@ function SignUp() {
 	// Function to handle form submission
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		console.log(formValues);
+
+		try {
+			register(formValues);
+			navigate('/login');
+		} catch (error) {
+			console.log(error);
+		}
 	};
 
 	return (
