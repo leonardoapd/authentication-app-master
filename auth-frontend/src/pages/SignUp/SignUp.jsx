@@ -1,5 +1,5 @@
 // SignUp.js
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { useColorMode } from '../../context/ColorModeContext';
 import FormInput from '../../components/FormInput/FormInput';
@@ -12,7 +12,9 @@ import './SignUp.css';
 
 function SignUp() {
 	const [formValues, setFormValues] = useState(new UserCredentials());
+	const [errorMessage, setErrorMessage] = useState('');
 	const { isDarkMode } = useColorMode();
+	const navigate = useNavigate();
 
 	// Function to handle changes to the form inputs and update the formValues state
 	const handleChange = (newValue, e) => {
@@ -21,14 +23,19 @@ function SignUp() {
 	};
 
 	// Function to handle form submission
-	const handleSubmit = (e) => {
+	const handleSubmit = async (e) => {
 		e.preventDefault();
 
 		try {
-			register(formValues);
+			await register(formValues);
 			navigate('/login');
 		} catch (error) {
-			console.log(error);
+			if (error.response && error.response.status === 409) {
+				setErrorMessage('User already exists');
+			} else {
+				setErrorMessage('An error occurred. Please try again later.');
+				console.log(error);
+			}
 		}
 	};
 
@@ -65,7 +72,7 @@ function SignUp() {
 					Start coding now
 				</button>
 			</form>
-
+			{errorMessage && <p className='container__error-message'>{errorMessage}</p>}
 			<p className='container__social-text'>
 				or continue with these social profile{' '}
 			</p>

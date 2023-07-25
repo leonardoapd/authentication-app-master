@@ -6,13 +6,19 @@ import Logo from '../../components/Logo/Logo';
 import images from '../../constants/images';
 import { UserCredentials } from '../../models/user-credentials';
 import { login } from '../../services/user-services';
-import { setToken } from '../../utils/token-helper';
 import './Login.css';
 
-function Login() {
+function Login({ onLogin }) {
 	const [formValues, setFormValues] = useState(new UserCredentials());
+	const [errorMessage, setErrorMessage] = useState('');
 	const { isDarkMode } = useColorMode();
 	const navigate = useNavigate();
+
+	const errorMessages = {
+		400: 'Invalid request',
+		401: 'Invalid credentials',
+		404: 'User not found',
+	};
 
 	// Function to handle changes to the form inputs and update the formValues state
 	const handleChange = (newValue, e) => {
@@ -25,12 +31,16 @@ function Login() {
 		e.preventDefault();
 
 		try {
-			const authToken = await login(formValues);
-			setToken(authToken);
-
+			await login(formValues);
+			onLogin();
 			navigate('/personal-info');
 		} catch (error) {
-			console.log(error);
+			if (error.response && error.response.status in errorMessages) {
+				setErrorMessage(errorMessages[error.response.status]);
+			} else {
+				setErrorMessage('An error occurred. Please try again later.');
+				console.log(error);
+			}
 		}
 	};
 
@@ -68,6 +78,10 @@ function Login() {
 				</button>
 			</form>
 
+			{errorMessage && (
+				<p className='container__error-message'>{errorMessage}</p>
+			)}
+			
 			<p className='container__social-text'>
 				or continue with these social profile{' '}
 			</p>

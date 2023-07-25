@@ -27,7 +27,7 @@ namespace AuthBackend.Controllers
             var existingUser = await _usersRepository.GetUserByEmailAsync(user.Email);
             if (existingUser != null)
             {
-                return BadRequest("User with this email already exists");
+                return Conflict("User with this email already exists");
             }
 
             await _usersRepository.CreateUserAsync(user);
@@ -40,7 +40,7 @@ namespace AuthBackend.Controllers
             User existingUser = await _usersRepository.GetUserByEmailAsync(user.Email);
             if (existingUser == null)
             {
-                return BadRequest("User with this email does not exist");
+                return NotFound("User with this email does not exist");
             }
 
             // Check if the password is correct

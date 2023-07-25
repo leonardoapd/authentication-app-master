@@ -1,9 +1,13 @@
 import apiClient from '../api/api-client';
+import { setToken } from '../utils/token-helper';
 
 export const login = async (userCredentials) => {
 	try {
-		const response = await apiClient.post('/auth/login', userCredentials);
-		return response.accessToken;
+		const response = await apiClient.post('/auth/signin', userCredentials);
+		const headers = response.headers;
+		const bearerToken = headers['authorization'];
+		const token = bearerToken.replace('Bearer ', '');
+		setToken(token);
 	} catch (error) {
 		console.error('Error while logging in user', error.message);
 		throw error;
@@ -11,11 +15,10 @@ export const login = async (userCredentials) => {
 };
 
 export const register = async (userCredentials) => {
-    try {
-        const response = await apiClient.post('/auth/register', userCredentials);
-        return response.accessToken;
-    } catch (error) {
-        console.error('Error while registering user', error.message);
-        throw error;
-    }
-}
+	try {
+		await apiClient.post('/auth/signup', userCredentials);
+	} catch (error) {
+		console.error('Error while registering user', error.message);
+		throw error;
+	}
+};

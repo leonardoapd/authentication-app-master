@@ -8,7 +8,7 @@ export default function PublicRoutes({ setIsLoggedIn }) {
     // Aquí se podría hacer alguna lógica para autenticar al usuario
     // Por ejemplo, enviar una solicitud al servidor para verificar las credenciales.
     // Si las credenciales son válidas, se llama a setIsLoggedIn(true)
-    setIsLoggedIn(false);
+    setIsLoggedIn(true);
   };
 
   const handleSignUp = () => {

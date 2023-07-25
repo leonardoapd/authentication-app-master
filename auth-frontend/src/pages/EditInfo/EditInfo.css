@@ -50,7 +50,7 @@
     }
 
     .edit-container {
-        max-width: 55%;
+        max-width: 55% !important;
     }
 
     .edit-info__back-container {
