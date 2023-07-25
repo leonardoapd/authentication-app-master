@@ -1,0 +1,4 @@
+.env
+
+## Ignore appsettings.json
+appsettings.json
