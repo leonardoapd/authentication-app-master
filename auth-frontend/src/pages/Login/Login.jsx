@@ -6,17 +6,19 @@ import Logo from '../../components/Logo/Logo';
 import images from '../../constants/images';
 import { UserCredentials } from '../../models/user-credentials';
 import { login } from '../../services/user-services';
+import { useAuth } from '../../context/AuthContext';
 import './Login.css';
 
 function Login({ onLogin }) {
 	const [formValues, setFormValues] = useState(new UserCredentials());
 	const [errorMessage, setErrorMessage] = useState('');
 	const { isDarkMode } = useColorMode();
+	const { handleLogin } = useAuth();
 	const navigate = useNavigate();
 
 	const errorMessages = {
-		400: 'Invalid request',
-		401: 'Invalid credentials',
+		400: 'Invalid credentials',
+		401: 'Invalid request',
 		404: 'User not found',
 	};
 
@@ -32,7 +34,7 @@ function Login({ onLogin }) {
 
 		try {
 			await login(formValues).then(() => {
-				onLogin();
+				handleLogin();
 				navigate('/');
 			});
 		} catch (error) {

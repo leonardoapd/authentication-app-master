@@ -39,7 +39,7 @@ export default function NavbarMenu({ onMenuItemClick }) {
 				</li>
 				<li
 					className='navbar__menu-item'
-					onClick={() => handleMenuItemClick('/login')}
+					onClick={() => handleMenuItemClick('/logout')}
 				>
 					<LogoutIcon />
 					Logout
