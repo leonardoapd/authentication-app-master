@@ -27,8 +27,9 @@ function SignUp() {
 		e.preventDefault();
 
 		try {
-			await register(formValues);
-			navigate('/login');
+			await register(formValues).then(() => {
+				navigate('/login');
+			});
 		} catch (error) {
 			if (error.response && error.response.status === 409) {
 				setErrorMessage('User already exists');

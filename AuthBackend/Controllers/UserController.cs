@@ -75,7 +75,22 @@ namespace AuthBackend.Controllers
         public async Task<IActionResult> GetCurrentUser(string email)
         {
             var user = await _usersRepository.GetUserByEmailAsync(email);
-            return Ok(new { user.Email, user.Name });
+            return Ok(new { user.Email, user.Name, user.Photo, user.Bio, user.Phone });
+        }
+
+        [Authorize]
+        [HttpPut("me")]
+        public async Task<IActionResult> UpdateCurrentUser([FromBody] User user)
+        {
+            var existingUser = await _usersRepository.GetUserByEmailAsync(user.Email);
+            if (existingUser == null)
+            {
+                return NotFound("User with this email does not exist");
+            }
+
+            user.Id = existingUser.Id;
+            await _usersRepository.UpdateUserAsync(user);
+            return Ok();
         }
     }
 }

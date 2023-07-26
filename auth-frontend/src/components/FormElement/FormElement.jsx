@@ -2,8 +2,8 @@ import { useState, forwardRef, useImperativeHandle } from 'react';
 import './FormElement.css';
 
 const FormElement = forwardRef(
-	({ label, name, type, icon, onChange, rows }, ref) => {
-		const [value, setValue] = useState('');
+	({ label, name, type, icon, onChange, rows, initialValue }, ref) => {
+		const [value, setValue] = useState(initialValue ?? '');
 		const [error, setError] = useState('');
 
 		const elementId = label.replace(/\s+/g, '-').toLowerCase();

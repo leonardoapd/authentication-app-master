@@ -31,9 +31,10 @@ function Login({ onLogin }) {
 		e.preventDefault();
 
 		try {
-			await login(formValues);
-			onLogin();
-			navigate('/personal-info');
+			await login(formValues).then(() => {
+				onLogin();
+				navigate('/');
+			});
 		} catch (error) {
 			if (error.response && error.response.status in errorMessages) {
 				setErrorMessage(errorMessages[error.response.status]);
