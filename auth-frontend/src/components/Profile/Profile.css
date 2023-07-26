@@ -11,6 +11,10 @@
     align-items: center;
 }
 
+.profile div:last-child {
+    border-bottom: none;
+}
+
 .profile div h3 {
     font-size: 13px;
     font-weight: 500;

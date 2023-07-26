@@ -1,13 +1,25 @@
-import EditProfileForm from '../../components/EditProfileForm/EditProfileForm';
-import { Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { useColorMode } from '../../context/ColorModeContext';
+import { useUser } from '../../context/UserContext';
+import { updateUser } from '../../services/user-services';
 import Navbar from '../../components/Navbar/Navbar';
-import Footer from '../../components/Footer/Footer';
-import './EditInfo.css';
+import EditProfileForm from '../../components/EditProfileForm/EditProfileForm';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import './EditInfo.css';
 
 export default function EditInfo() {
 	const { isDarkMode } = useColorMode();
+	const navigate = useNavigate();
+	const { user, editUser } = useUser();
+	
+	
+	const handleSubmit = async (values) => {
+		await updateUser(values).then((updatedUser) => {
+			editUser(updatedUser);
+			navigate('/personal-info');
+		});
+	};
 
 	return (
 		<>
@@ -31,7 +43,7 @@ export default function EditInfo() {
 						Changes will be reflected to every services
 					</p>
 				</main>
-				<EditProfileForm />
+				<EditProfileForm onSubmit={handleSubmit} user={user} />
 			</div>
 		</>
 	);

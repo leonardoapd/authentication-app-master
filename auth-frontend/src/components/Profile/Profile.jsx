@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import images from '../../constants/images';
 import './Profile.css';
 
-export default function Profile() {
+export default function Profile({ user }) {
     const { isDarkMode } = useColorMode();
 
 	const navigate = useNavigate();
@@ -24,23 +24,23 @@ export default function Profile() {
 			</div>
 			<div className='profile__name'>
 				<h3 className='profile__subtitle'>Name</h3>
-				<p className='profile__content'>Firstname Lastname</p>
+				<p className='profile__content'>{user?.name || 'Set your name'}</p>
 			</div>
 			<div className='profile__bio'>
 				<h3 className='profile__subtitle'>Bio</h3>
-				<p className='profile__content'>Bio</p>
+				<p className='profile__content'>{user?.bio || 'Set your bio'}</p>
 			</div>
 			<div className='profile__phone'>
 				<h3 className='profile__subtitle'>Phone</h3>
-				<p className='profile__content'>Phone</p>
+				<p className='profile__content'>{user?.phone || 'Set your phone'}</p>
 			</div>
 			<div className='profile__email'>
 				<h3 className='profile__subtitle'>Email</h3>
-				<p className='profile__content'>Email</p>
+				<p className='profile__content'>{user?.email}</p>
 			</div>
 			<div className='profile__password'>
 				<h3 className='profile__subtitle'>Password</h3>
-				<p className='profile__content'>Password</p>
+				<p className='profile__content'>**********</p>
 			</div>
 		</section>
 	);

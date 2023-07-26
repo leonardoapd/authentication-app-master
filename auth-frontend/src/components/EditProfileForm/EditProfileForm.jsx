@@ -1,12 +1,11 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { UserInfo } from '../../models/user-info';
 import EditProfilePhoto from '../EditProfilePhoto/EditProfilePhoto';
 import FormInput from '../FormInput/FormInput';
 import FormTextarea from '../FormTextarea/FormTextarea';
 import './EditProfileForm.css';
-
-export default function EditProfileForm() {
-	const [formValues, setFormValues] = useState(new UserInfo());
+export default function EditProfileForm({ onSubmit, user }) {
+	const [formValues, setFormValues] = useState(new UserInfo( user?.name, user?.bio, user?.photo, user?.phone, user?.email, user?.password));
 
 	const handleChange = (newValue, e) => {
 		const { name } = e.target;
@@ -15,8 +14,12 @@ export default function EditProfileForm() {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		console.log(formValues);
+		onSubmit(formValues);
 	};
+
+	// useEffect(() => {
+	// 	setFormValues(user);
+	// }, [user]);
 
 	return (
 		<>
@@ -28,7 +31,7 @@ export default function EditProfileForm() {
 					name='name'
 					type='text'
 					onChange={handleChange}
-					value={formValues.name}
+					initialValue={formValues.name} // Utiliza formValues.name en lugar de user?.name
 				/>
 
 				<FormTextarea
@@ -36,7 +39,7 @@ export default function EditProfileForm() {
 					name='bio'
 					type='textarea'
 					onChange={handleChange}
-					value={formValues.bio}
+					initialValue={formValues.bio} // Utiliza formValues.bio en lugar de user?.bio
 					rows={4}
 				/>
 
@@ -45,7 +48,7 @@ export default function EditProfileForm() {
 					name='phone'
 					type='number'
 					onChange={handleChange}
-					value={formValues.phone}
+					initialValue={formValues.phone} // Utiliza formValues.phone en lugar de user?.phone
 				/>
 
 				<FormInput
@@ -53,7 +56,7 @@ export default function EditProfileForm() {
 					name='email'
 					type='email'
 					onChange={handleChange}
-					value={formValues.email}
+					initialValue={formValues.email} // Utiliza formValues.email en lugar de user?.email
 				/>
 
 				<FormInput
@@ -61,7 +64,7 @@ export default function EditProfileForm() {
 					name='password'
 					type='password'
 					onChange={handleChange}
-					value={formValues.password}
+					initialValue={formValues.password} // Utiliza formValues.password en lugar de user?.password
 				/>
 
 				<button

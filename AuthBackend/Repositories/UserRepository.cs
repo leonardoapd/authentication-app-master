@@ -23,7 +23,7 @@ namespace AuthBackend.Repositories
             var database = client.GetDatabase(settings.Value.DatabaseName);
             _usersCollection = database.GetCollection<User>(settings.Value.CollectionName);
         }
-        
+
         public async Task CreateUserAsync(User user)
         {
             // Hash the password
@@ -96,6 +96,7 @@ namespace AuthBackend.Repositories
 
         public Task UpdateUserAsync(User user)
         {
+            user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password);
             try
             {
                 var filter = filterBuilder.Eq(existingUser => existingUser.Id, user.Id);
