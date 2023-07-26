@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useColorMode } from '../../context/ColorModeContext';
 import { useUser } from '../../context/UserContext';
@@ -23,7 +22,7 @@ export default function EditInfo() {
 
 	return (
 		<>
-			<Navbar />
+			<Navbar user={user}/>
 			<div className='edit-info__back-container'>
 				<Link
 					to='/personal-info'

@@ -16,7 +16,7 @@ export default function PersonalInfo() {
 
 	return (
 		<>
-			<Navbar />
+			<Navbar user={user} />
 			<main className='personal-info'>
 				<h1 className={`personal-info__title ${isDarkMode}`}>
 					Personal Info

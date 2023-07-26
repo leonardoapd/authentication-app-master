@@ -25,8 +25,7 @@ export const register = async (userCredentials) => {
 
 export const logout = async () => {
 	try {
-		await apiClient.post('/auth/logout');
-		removeToken();
+		await apiClient.get('/auth/logout');
 	} catch (error) {
 		console.error('Error while logging out user', error.message);
 		throw error;

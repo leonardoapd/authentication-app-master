@@ -1,13 +1,17 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useColorMode } from '../../context/ColorModeContext';
+import { logout } from '../../services/user-services';
+import { removeToken } from '../../utils/token-helper';
+import { useAuth } from '../../context/AuthContext';
 import images from '../../constants/images';
 import Logo from '../Logo/Logo';
 import './Navbar.css';
 import NavbarMenu from '../NavbarMenu/NavbarMenu';
 
-export default function Navbar() {
+export default function Navbar({ user }) {
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
+	const { handleLogout: onLogout } = useAuth();
 	const navigate = useNavigate();
 	const { isDarkMode } = useColorMode();
 
@@ -15,8 +19,18 @@ export default function Navbar() {
 		setIsMenuOpen(!isMenuOpen);
 	};
 
-	const handleMenuItemClick = (path) => {
-		navigate(path);
+	const handleMenuItemClick = async (path) => {
+		if (path === '/logout') {
+			await logout()
+				.then(() => {
+					onLogout();
+					removeToken();
+					navigate('/login');
+				})
+				.catch(() => navigate('/login'));
+		} else {
+			navigate(path);
+		}
 		setIsMenuOpen(false);
 	};
 
@@ -30,7 +44,9 @@ export default function Navbar() {
 				</div>
 				<div className='navbar__menu-container'>
 					<img className='navbar__avatar' src={images.user} alt='' />
-					<p className={`navbar__username ${isDarkMode}`}>John Doe</p>
+					<p className={`navbar__username ${isDarkMode}`}>
+						{user?.name}
+					</p>
 					<button
 						className={`navbar__menu-button ${
 							isMenuOpen ? 'open' : ''
