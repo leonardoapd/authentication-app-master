@@ -2,7 +2,7 @@ import { useState, forwardRef, useImperativeHandle } from 'react';
 import './FormElement.css';
 
 const FormElement = forwardRef(
-	({ label, name, type, icon, onChange, rows, initialValue }, ref) => {
+	({ label, name, type, icon, onChange, rows, initialValue, disabled }, ref) => {
 		const [value, setValue] = useState(initialValue ?? '');
 		const [error, setError] = useState('');
 
@@ -48,6 +48,7 @@ const FormElement = forwardRef(
 								: 'var(--border-color)',
 						}}
 						rows={rows}
+						disabled={disabled}
 					/>
 				) : (
 					<input
@@ -63,6 +64,7 @@ const FormElement = forwardRef(
 								? '#FF6B6B'
 								: 'var(--border-color)',
 						}}
+						disabled={disabled}
 					/>
 				)}
 				<label
