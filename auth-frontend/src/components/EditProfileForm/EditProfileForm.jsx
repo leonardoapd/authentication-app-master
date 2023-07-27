@@ -55,7 +55,7 @@ export default function EditProfileForm({ onSubmit, user }) {
 					label='Email'
 					name='email'
 					type='email'
-					onChange={handleChange}
+					disabled
 					initialValue={formValues.email} // Utiliza formValues.email en lugar de user?.email
 				/>
 
