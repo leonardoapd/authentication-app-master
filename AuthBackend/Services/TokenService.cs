@@ -5,11 +5,12 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using AuthBackend.Settings;
 using Microsoft.IdentityModel.Tokens;
 
 namespace AuthBackend.Services
 {
-      public class TokenService : ITokenService
+    public class TokenService : ITokenService
     {
         public string GenerateToken(string email)
         {

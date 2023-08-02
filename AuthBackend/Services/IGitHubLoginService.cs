@@ -6,8 +6,9 @@ using AuthBackend.Entities;
 
 namespace AuthBackend.Services
 {
-    public interface ITokenService
+    public interface IGitHubLoginService
     {
-        public string GenerateToken(string email);
+        public Task<string> GenerateTokenAsync(string code);
+        public Task<User> GetGitHubUserAsync(string token);
     }
 }

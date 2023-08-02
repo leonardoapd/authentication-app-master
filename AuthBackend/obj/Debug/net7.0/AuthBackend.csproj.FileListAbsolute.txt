@@ -54,3 +54,4 @@ C:\Development\DevChallenges2023\authentication-app-master\AuthBackend\obj\Debug
 C:\Development\DevChallenges2023\authentication-app-master\AuthBackend\obj\Debug\net7.0\ref\AuthBackend.dll
 C:\Development\DevChallenges2023\authentication-app-master\AuthBackend\bin\Debug\net7.0\DotNetEnv.dll
 C:\Development\DevChallenges2023\authentication-app-master\AuthBackend\bin\Debug\net7.0\Sprache.dll
+C:\Development\DevChallenges2023\authentication-app-master\AuthBackend\bin\Debug\net7.0\Newtonsoft.Json.dll

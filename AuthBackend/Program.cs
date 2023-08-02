@@ -1,6 +1,7 @@
 using System.Text;
 using AuthBackend.Repositories;
 using AuthBackend.Settings;
+using AuthBackend.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using MongoDB.Driver;
@@ -36,7 +37,12 @@ builder.Services.AddSwaggerGen();
 // MongoDB
 builder.Services.Configure<MongoDBSettings>(builder.Configuration.GetSection("MongoDBSettings"));
 
+// GitHub
+builder.Services.Configure<GithubAuthSettings>(builder.Configuration.GetSection("GithubAuthSettings"));
 builder.Services.AddSingleton<IUserRepository, UserRepository>();
+builder.Services.AddSingleton<ITokenService, TokenService>();
+builder.Services.AddSingleton<IGitHubLoginService, GitHubLoginService>();
+builder.Services.AddHttpClient();
 
 // Injections
 // builder.Services.AddScoped<IUserRepository, UserRepository>();
