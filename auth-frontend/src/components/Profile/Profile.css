@@ -28,6 +28,8 @@
     font-weight: 500;
     /* color: #333; */
     line-height: 22px;
+    max-width: 60%;
+    text-align: right;
 }
 
 .profile .profile__header {
@@ -90,5 +92,9 @@
 
     .profile .profile__header {
         border-bottom: 1px solid var(--border-color-light, #06d6a0);
+    }
+
+    .profile div p {
+        max-width: 70%;
     }
 }
