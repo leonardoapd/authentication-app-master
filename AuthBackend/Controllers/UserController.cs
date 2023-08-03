@@ -92,10 +92,17 @@ namespace AuthBackend.Controllers
                 return NotFound("User with this email does not exist");
             }
 
+            if (existingUser.Password is not null && !(BCrypt.Net.BCrypt.Verify(user.Password, existingUser.Password)))
+            {
+                return BadRequest("Invalid password");
+            }
+
+            user.Password = user.Password is not null ? BCrypt.Net.BCrypt.HashPassword(user.Password) : null;
             user.Id = existingUser.Id;
             await _usersRepository.UpdateUserAsync(user);
             return Ok();
         }
+
 
         [HttpPost("github-signin")]
         public async Task<IActionResult> GitHubSignInAsync([FromBody] string code)

@@ -4,7 +4,7 @@ import EditProfilePhoto from '../EditProfilePhoto/EditProfilePhoto';
 import FormInput from '../FormInput/FormInput';
 import FormTextarea from '../FormTextarea/FormTextarea';
 import './EditProfileForm.css';
-export default function EditProfileForm({ onSubmit, user }) {
+export default function EditProfileForm({ onSubmit, user, error }) {
 	const [formValues, setFormValues] = useState(new UserInfo( user?.name, user?.bio, user?.photo, user?.phone, user?.email, user?.password));
 
 	const handleChange = (newValue, e) => {
@@ -66,6 +66,8 @@ export default function EditProfileForm({ onSubmit, user }) {
 					onChange={handleChange}
 					initialValue={formValues.password} // Utiliza formValues.password en lugar de user?.password
 				/>
+
+				{error && <p className='container__error-message'>{error}</p>}
 
 				<button
 					className='form__button edit-form__button'

@@ -98,7 +98,7 @@ namespace AuthBackend.Repositories
 
         public Task UpdateUserAsync(User user)
         {
-            user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password);
+            // user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password);
             try
             {
                 var filter = filterBuilder.Eq(existingUser => existingUser.Id, user.Id);

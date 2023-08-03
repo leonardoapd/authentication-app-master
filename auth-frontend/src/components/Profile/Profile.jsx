@@ -20,7 +20,7 @@ export default function Profile({ user }) {
 			</div>
 			<div className='profile__photo'>
 				<h3 className='profile__subtitle'>Photo</h3>
-				<img className='profile__image' src={images.user} alt='Profile' />
+				<img className='profile__image' src={user?.photo || images.user} alt='Profile' />
 			</div>
 			<div className='profile__name'>
 				<h3 className='profile__subtitle'>Name</h3>
