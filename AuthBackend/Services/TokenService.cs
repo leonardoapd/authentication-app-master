@@ -18,14 +18,15 @@ namespace AuthBackend.Services
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
             var claims = new[]
-            {
-                new Claim(JwtRegisteredClaimNames.Sub, email),
-                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-            };
+          {
+            new Claim(JwtRegisteredClaimNames.Sub, email),
+            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+            new Claim(ClaimTypes.Email, email)
+        };
 
             var token = new JwtSecurityToken(
-                issuer: null,
-                audience: null,
+                issuer: "https://localhost:7059",
+                audience: "https://localhost:7059",
                 claims: claims,
                 expires: DateTime.Now.AddMinutes(30),
                 signingCredentials: credentials
@@ -33,5 +34,30 @@ namespace AuthBackend.Services
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
+
+        public string GetEmailFromToken(string token)
+        {
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var validationParameters = new TokenValidationParameters
+            {
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("ToDoBackendSecretKey@324")),
+                ValidateIssuer = false,
+                ValidateAudience = false,
+                ClockSkew = TimeSpan.Zero
+            };
+
+            try
+            {
+                var claimsPrincipal = tokenHandler.ValidateToken(token, validationParameters, out var validatedToken);
+                var email = claimsPrincipal.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Email)?.Value;
+                return email;
+            }
+            catch (SecurityTokenValidationException)
+            {
+                return null;
+            }
+        }
+
     }
 }

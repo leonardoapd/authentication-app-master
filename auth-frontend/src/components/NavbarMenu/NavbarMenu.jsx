@@ -25,6 +25,7 @@ export default function NavbarMenu({ onMenuItemClick }) {
 			>
 				<li
 					className='navbar__menu-item'
+					role='anchor'
 					onClick={() => handleMenuItemClick('/personal-info')}
 				>
 					<AccountCircleIcon />
@@ -32,6 +33,7 @@ export default function NavbarMenu({ onMenuItemClick }) {
 				</li>
 				<li
 					className='navbar__menu-item'
+					role='anchor'
 					onClick={() => handleMenuItemClick('/edit-info')}
 				>
 					<PeopleIcon />
@@ -39,6 +41,7 @@ export default function NavbarMenu({ onMenuItemClick }) {
 				</li>
 				<li
 					className='navbar__menu-item'
+					role='button'
 					onClick={() => handleMenuItemClick('/logout')}
 				>
 					<LogoutIcon />

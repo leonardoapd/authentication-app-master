@@ -9,11 +9,13 @@ import { UserCredentials } from '../../models/user-credentials';
 import { login, githubLogin } from '../../services/user-services';
 import { useAuth } from '../../context/AuthContext';
 import './Login.css';
+import Dialog from '../../components/Dialog/Dialog';
 
 function Login({ onLogin }) {
 	const [formValues, setFormValues] = useState(new UserCredentials());
 	const [errorMessage, setErrorMessage] = useState('');
 	const [successMessage, setSuccessMessage] = useState('');
+	const [isRedirecting, setIsRedirecting] = useState(false);
 	const { isDarkMode } = useColorMode();
 	const { handleLogin } = useAuth();
 	const navigate = useNavigate();
@@ -67,7 +69,7 @@ function Login({ onLogin }) {
 		const code = urlParams.get('code');
 
 		if (code) {
-			setSuccessMessage('Successfully logged in with Github! 🎉');
+			setIsRedirecting(true);
 			try {
 				githubLogin(code).then(() => {
 					handleLogin();
@@ -80,6 +82,7 @@ function Login({ onLogin }) {
 					setErrorMessage(
 						'An error occurred. Please try again later.'
 					);
+					setIsRedirecting(false);
 					console.log(error);
 				}
 			}
@@ -152,6 +155,13 @@ function Login({ onLogin }) {
 				Don&apos;t have an account yet?{' '}
 				<Link to='/signup'>Register</Link>
 			</p>
+
+			{isRedirecting && (
+				<Dialog
+					title='Login successful 🎉'
+					content='Redirecting to home page...'
+				/>
+			)}
 		</main>
 	);
 }

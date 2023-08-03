@@ -21,8 +21,11 @@ builder.Services.AddAuthentication(options =>
     {
         ValidateIssuerSigningKey = true,
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes("ToDoBackendSecretKey@324")),
-        ValidateIssuer = false,
-        ValidateAudience = false
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidIssuer = "https://localhost:7059",
+        ValidAudience = "https://localhost:7059",
+        ClockSkew = TimeSpan.Zero,
     };
 });
 
