@@ -15,6 +15,7 @@ function SignUp() {
 	const [errorMessage, setErrorMessage] = useState('');
 	const { isDarkMode } = useColorMode();
 	const navigate = useNavigate();
+	const GH_CLIENT_ID = import.meta.env.VITE_GITHUB_CLIENT_ID;
 
 	// Function to handle changes to the form inputs and update the formValues state
 	const handleChange = (newValue, e) => {
@@ -37,6 +38,16 @@ function SignUp() {
 				setErrorMessage('An error occurred. Please try again later.');
 				console.log(error);
 			}
+		}
+	};
+
+	const handleGithubLogin = async () => {
+		try {
+			window.location.assign(
+				`https://github.com/login/oauth/authorize?client_id=${GH_CLIENT_ID}`
+			);
+		} catch (error) {
+			console.log(error);
 		}
 	};
 
@@ -87,7 +98,11 @@ function SignUp() {
 					icon={images.twitterIcon}
 					altText='Twitter logo'
 				/>
-				<SocialButton icon={images.githubIcon} altText='Github logo' />
+				<SocialButton
+					icon={images.githubIcon}
+					altText='Github logo'
+					onClick={handleGithubLogin}
+				/>
 			</div>
 
 			<p className='container__social-text'>
