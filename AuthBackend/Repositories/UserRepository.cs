@@ -27,7 +27,9 @@ namespace AuthBackend.Repositories
         public async Task CreateUserAsync(User user)
         {
             // Hash the password
-            user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password);
+            if (user.Password != null) {
+                user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password);
+            }
 
             try
             {

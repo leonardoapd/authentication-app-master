@@ -1,20 +1,24 @@
 import { Link, useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useColorMode } from '../../context/ColorModeContext';
 import FormInput from '../../components/FormInput/FormInput';
+import SocialButton from '../../components/SocialButton/SocialButton';
 import Logo from '../../components/Logo/Logo';
 import images from '../../constants/images';
 import { UserCredentials } from '../../models/user-credentials';
-import { login } from '../../services/user-services';
+import { login, githubLogin } from '../../services/user-services';
 import { useAuth } from '../../context/AuthContext';
 import './Login.css';
 
 function Login({ onLogin }) {
 	const [formValues, setFormValues] = useState(new UserCredentials());
 	const [errorMessage, setErrorMessage] = useState('');
+	const [successMessage, setSuccessMessage] = useState('');
 	const { isDarkMode } = useColorMode();
 	const { handleLogin } = useAuth();
 	const navigate = useNavigate();
+
+	const GH_CLIENT_ID = import.meta.env.VITE_GITHUB_CLIENT_ID;
 
 	const errorMessages = {
 		400: 'Invalid credentials',
@@ -46,6 +50,41 @@ function Login({ onLogin }) {
 			}
 		}
 	};
+
+	const handleGithubLogin = async () => {
+		try {
+			window.location.assign(
+				`https://github.com/login/oauth/authorize?client_id=${GH_CLIENT_ID}`
+			);
+		} catch (error) {
+			console.log(error);
+		}
+	};
+
+	useEffect(() => {
+		const queryStr = window.location.search;
+		const urlParams = new URLSearchParams(queryStr);
+		const code = urlParams.get('code');
+
+		if (code) {
+			setSuccessMessage('Successfully logged in with Github! 🎉');
+			try {
+				githubLogin(code).then(() => {
+					handleLogin();
+					navigate('/');
+				});
+			} catch (error) {
+				if (error.response && error.response.status in errorMessages) {
+					setErrorMessage(errorMessages[error.response.status]);
+				} else {
+					setErrorMessage(
+						'An error occurred. Please try again later.'
+					);
+					console.log(error);
+				}
+			}
+		}
+	}, []);
 
 	return (
 		<main className='container'>
@@ -84,23 +123,29 @@ function Login({ onLogin }) {
 			{errorMessage && (
 				<p className='container__error-message'>{errorMessage}</p>
 			)}
-			
+
+			{successMessage && (
+				<p className='container__success-message'>{successMessage}</p>
+			)}
+
 			<p className='container__social-text'>
 				or continue with these social profile{' '}
 			</p>
 			<div className='container__social-buttons'>
-				<button className='container__social-button'>
-					<img src={images.googleIcon} alt='Google logo' />
-				</button>
-				<button className='container__social-button'>
-					<img src={images.facebookIcon} alt='Facebook logo' />
-				</button>
-				<button className='container__social-button'>
-					<img src={images.twitterIcon} alt='Twitter logo' />
-				</button>
-				<button className='container__social-button'>
-					<img src={images.githubIcon} alt='Github logo' />
-				</button>
+				<SocialButton icon={images.googleIcon} altText='Google logo' />
+				<SocialButton
+					icon={images.facebookIcon}
+					altText='Facebook logo'
+				/>
+				<SocialButton
+					icon={images.twitterIcon}
+					altText='Twitter logo'
+				/>
+				<SocialButton
+					icon={images.githubIcon}
+					altText='Github logo'
+					onClick={handleGithubLogin}
+				/>
 			</div>
 
 			<p className='container__social-text'>

@@ -15,10 +15,14 @@ namespace AuthBackend.Controllers
     public class UserController : ControllerBase
     {
         private readonly IUserRepository _usersRepository;
+        private readonly IGitHubLoginService _gitHubLoginService;
+        private readonly ITokenService _tokenService;
 
-        public UserController(IUserRepository usersRepository)
+        public UserController(IUserRepository usersRepository, IGitHubLoginService gitHubLoginService, ITokenService tokenService)
         {
             _usersRepository = usersRepository;
+            _gitHubLoginService = gitHubLoginService;
+            _tokenService = tokenService;
         }
 
         [HttpPost("signup")]
@@ -50,7 +54,7 @@ namespace AuthBackend.Controllers
             }
 
             // If the user exists and the password is correct, return a token
-            var token = new TokenService().GenerateToken(existingUser.Email);
+            var token = _tokenService.GenerateToken(existingUser.Email);
 
             Response.Headers.Append("Authorization", $"Bearer {token}");
 
@@ -92,5 +96,30 @@ namespace AuthBackend.Controllers
             await _usersRepository.UpdateUserAsync(user);
             return Ok();
         }
+
+        [HttpPost("github-signin")]
+        public async Task<IActionResult> GitHubSignInAsync([FromBody] string code)
+        {
+            var token = await _gitHubLoginService.GenerateTokenAsync(code);
+
+            var user = await _gitHubLoginService.GetGitHubUserAsync(token);
+            if (user == null)
+            {
+                return BadRequest("Invalid token");
+            }
+
+            var existingUser = await _usersRepository.GetUserByEmailAsync(user.Email);
+            if (existingUser == null)
+            {
+                await _usersRepository.CreateUserAsync(user);
+            }
+
+            var jwtToken = _tokenService.GenerateToken(user.Email);
+            Response.Headers.Append("Authorization", $"Bearer {jwtToken}");
+
+            return Ok(new { user.Email, user.Name, user.Photo });
+        }
+
+
     }
 }

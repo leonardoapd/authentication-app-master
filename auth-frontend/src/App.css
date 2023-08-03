@@ -51,6 +51,13 @@
   font-style: italic;
 }
 
+.container__success-message {
+  font-size: 12px;
+  line-height: 20px;
+  color: #219653;
+  font-style: italic;
+}
+
 .container__social-text {
   font-size: 14px;
   line-height: 20px;

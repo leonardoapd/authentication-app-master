@@ -49,4 +49,17 @@ export const updateUser = async (user) => {
 		console.error('Error while updating user', error.message);
 		throw error;
 	}
-}
+};
+
+export const githubLogin = async (code) => {
+	try {
+		const response = await apiClient.post('/auth/github-signin', code);
+		const headers = response.headers;
+		const bearerToken = headers['authorization'];
+		const token = bearerToken.replace('Bearer ', '');
+		setToken(token);
+	} catch (error) {
+		console.error('Error while logging in user', error.message);
+		throw error;
+	}
+};
