@@ -53,34 +53,10 @@
     cursor: pointer;
 }
 
-.profile__photo {
-
-}
-
 .profile__image {
     width: 72px;
     height: 72px;
     border-radius: 8px;
-}
-
-.profile__name {
-    /* Estilos para el elemento 'name' dentro del bloque 'profile' */
-}
-
-.profile__bio {
-    /* Estilos para el elemento 'bio' dentro del bloque 'profile' */
-}
-
-.profile__phone {
-    /* Estilos para el elemento 'phone' dentro del bloque 'profile' */
-}
-
-.profile__email {
-    /* Estilos para el elemento 'email' dentro del bloque 'profile' */
-}
-
-.profile__password {
-    /* Estilos para el elemento 'password' dentro del bloque 'profile' */
 }
 
 @media screen and (min-width: 768px) {
