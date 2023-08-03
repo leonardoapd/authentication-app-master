@@ -1,4 +1,5 @@
 import { Link, useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 import { useColorMode } from '../../context/ColorModeContext';
 import { useUser } from '../../context/UserContext';
 import { updateUser } from '../../services/user-services';
@@ -8,6 +9,7 @@ import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import './EditInfo.css';
 
 export default function EditInfo() {
+	const [errorMessage, setErrorMessage] = useState(null);
 	const { isDarkMode } = useColorMode();
 	const navigate = useNavigate();
 	const { user, editUser } = useUser();
@@ -17,6 +19,8 @@ export default function EditInfo() {
 		await updateUser(values).then((updatedUser) => {
 			editUser(updatedUser);
 			navigate('/personal-info');
+		}).catch((error) => {
+			setErrorMessage("You must enter the correct password to update your information");
 		});
 	};
 
@@ -42,7 +46,7 @@ export default function EditInfo() {
 						Changes will be reflected to every services
 					</p>
 				</main>
-				<EditProfileForm onSubmit={handleSubmit} user={user} />
+				<EditProfileForm onSubmit={handleSubmit} user={user} error={errorMessage} />
 			</div>
 		</>
 	);

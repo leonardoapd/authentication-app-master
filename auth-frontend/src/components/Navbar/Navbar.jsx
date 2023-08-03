@@ -43,7 +43,7 @@ export default function Navbar({ user }) {
 					</Link>
 				</div>
 				<div className='navbar__menu-container'>
-					<img className='navbar__avatar' src={images.user} alt='' />
+					<img className='navbar__avatar' src={user?.photo || images.user} alt='user picture' />
 					<p className={`navbar__username ${isDarkMode}`}>
 						{user?.name}
 					</p>

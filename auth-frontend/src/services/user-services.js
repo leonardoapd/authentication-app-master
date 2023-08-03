@@ -1,4 +1,4 @@
-import apiClient from '../api/api-client';
+import { apiClient, imageUploadClient } from '../api/api-client';
 import { setToken, removeToken } from '../utils/token-helper';
 
 export const login = async (userCredentials) => {
@@ -63,3 +63,13 @@ export const githubLogin = async (code) => {
 		throw error;
 	}
 };
+
+export const uploadAvatar = async (formData) => {
+	try {
+		const response = await imageUploadClient.post('', formData);
+		return response.data;
+	} catch (error) {
+		console.error('Error while uploading avatar', error.message);
+		throw error;
+	}
+}

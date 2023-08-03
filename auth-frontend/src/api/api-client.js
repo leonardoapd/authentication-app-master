@@ -1,11 +1,19 @@
 import axios from 'axios';
 
 const API_BASE_URL = import.meta.env.VITE_API_URL;
+const IMAGE_UPLOAD_URL = import.meta.env.VITE_IMAGE_UPLOAD_URL;
 
-const apiClient = axios.create({
+export const apiClient = axios.create({
     baseURL: API_BASE_URL,
     headers: {
         'Content-Type': 'application/json',
+    },
+});
+
+export const imageUploadClient = axios.create({
+    baseURL: IMAGE_UPLOAD_URL,
+    headers: {
+        'Content-Type': 'multipart/form-data',
     },
 });
 
@@ -22,6 +30,4 @@ apiClient.interceptors.request.use(
         return Promise.reject(error);
     }
 );
-
-export default apiClient;
 
