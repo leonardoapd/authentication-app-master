@@ -1,0 +1,25 @@
+dialog {
+    padding: 20px;
+    border-radius: 12px;
+    filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.5));
+    z-index: 9999;
+    border: 1px;
+    place-self: center;
+    margin: 0 auto;
+    color: #219653;
+  }
+  
+  /* Estilo para el botón de cierre del modal (opcional) */
+  dialog::backdrop {
+    background-color: rgba(117, 62, 180, 0.5);
+  }
+  
+  dialog :has(p, h2) {
+    margin: 10px 0;
+  }
+  
+  dialog h2 {
+    font-size: 1.2rem;
+    font-weight: bold;
+  }
+  

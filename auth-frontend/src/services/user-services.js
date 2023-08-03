@@ -1,5 +1,5 @@
 import { apiClient, imageUploadClient } from '../api/api-client';
-import { setToken, removeToken } from '../utils/token-helper';
+import { setToken } from '../utils/token-helper';
 
 export const login = async (userCredentials) => {
 	try {
@@ -32,9 +32,9 @@ export const logout = async () => {
 	}
 };
 
-export const getUser = async (email) => {
+export const getUser = async () => {
 	try {
-		const response = await apiClient.get(`/auth/me/${email}`);
+		const response = await apiClient.get('/auth/me');
 		return response.data;
 	} catch (error) {
 		console.error('Error while getting user', error.message);
@@ -72,4 +72,4 @@ export const uploadAvatar = async (formData) => {
 		console.error('Error while uploading avatar', error.message);
 		throw error;
 	}
-}
+};

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AuthBackend.DTOs;
 using AuthBackend.Entities;
 using AuthBackend.Repositories;
 using AuthBackend.Services;
@@ -26,17 +27,25 @@ namespace AuthBackend.Controllers
         }
 
         [HttpPost("signup")]
-        public async Task<IActionResult> SignUp([FromBody] User user)
+        public async Task<IActionResult> SignUp([FromBody] UserSignUpDTO userDto)
         {
-            var existingUser = await _usersRepository.GetUserByEmailAsync(user.Email);
+            var existingUser = await _usersRepository.GetUserByEmailAsync(userDto.Email);
+
             if (existingUser != null)
             {
                 return Conflict("User with this email already exists");
             }
 
+            var user = new User
+            {
+                Email = userDto.Email,
+                Password = userDto.Password,
+            };
+
             await _usersRepository.CreateUserAsync(user);
             return Ok();
         }
+
 
         [HttpPost("signin")]
         public async Task<IActionResult> SignIn([FromBody] User user)
@@ -75,11 +84,41 @@ namespace AuthBackend.Controllers
         }
 
         [Authorize]
-        [HttpGet("me/{email}")]
-        public async Task<IActionResult> GetCurrentUser(string email)
+        [HttpGet("me")]
+        public async Task<IActionResult> GetCurrentUser()
         {
+            var token = Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
+
+            if (string.IsNullOrEmpty(token))
+            {
+                return BadRequest("Invalid token");
+            }
+
+            // Obtiene el email del usuario desde el token JWT utilizando el método GetEmailFromToken de ITokenService
+            var email = _tokenService.GetEmailFromToken(token);
+
+            if (string.IsNullOrEmpty(email))
+            {
+                return BadRequest("Invalid token or user not found");
+            }
+
             var user = await _usersRepository.GetUserByEmailAsync(email);
-            return Ok(new { user.Email, user.Name, user.Photo, user.Bio, user.Phone });
+
+            if (user == null)
+            {
+                return NotFound("User not found");
+            }
+
+            var userResponse = new UserResponseDTO
+            {
+                Email = user.Email,
+                Name = user.Name,
+                Photo = user.Photo,
+                Bio = user.Bio,
+                Phone = user.Phone
+            };
+
+            return Ok(userResponse);
         }
 
         [Authorize]
@@ -107,6 +146,11 @@ namespace AuthBackend.Controllers
         [HttpPost("github-signin")]
         public async Task<IActionResult> GitHubSignInAsync([FromBody] string code)
         {
+            if (string.IsNullOrEmpty(code))
+            {
+                return BadRequest("Invalid code");
+            }
+
             var token = await _gitHubLoginService.GenerateTokenAsync(code);
 
             var user = await _gitHubLoginService.GetGitHubUserAsync(token);
@@ -122,9 +166,16 @@ namespace AuthBackend.Controllers
             }
 
             var jwtToken = _tokenService.GenerateToken(user.Email);
+
+            var responseDto = new GitHubSignInResponseDTO
+            {
+                Email = user.Email,
+                Name = user.Name,
+                Photo = user.Photo
+            };
             Response.Headers.Append("Authorization", $"Bearer {jwtToken}");
 
-            return Ok(new { user.Email, user.Name, user.Photo });
+            return Ok(responseDto);
         }
 
 

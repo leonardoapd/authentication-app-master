@@ -52,6 +52,7 @@ export default function Navbar({ user }) {
 							isMenuOpen ? 'open' : ''
 						}`}
 						onClick={handleMenuClick}
+						title='Menu'
 					>
 						<span
 							className='arrow'

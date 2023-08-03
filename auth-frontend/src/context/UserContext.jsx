@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, useEffect } from 'react';
 import { getUser } from '../services/user-services';
-import { getEmailFromToken, removeToken } from '../utils/token-helper';
+import { removeToken } from '../utils/token-helper';
 import { useNavigate } from 'react-router-dom';
 
 const UserContext = createContext();
@@ -18,8 +18,7 @@ export function UserProvider({ children }) {
 	};
 
 	const getUserInfo = async () => {
-		const email = getEmailFromToken();
-		getUser(email)
+		getUser()
 			.then((user) => {
 				setUser(user);
 			})
