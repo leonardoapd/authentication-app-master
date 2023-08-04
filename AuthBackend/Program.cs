@@ -5,6 +5,7 @@ using AuthBackend.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using MongoDB.Driver;
+using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,12 +16,16 @@ builder.Services.AddAuthentication(options =>
 })
 .AddJwtBearer(options =>
 {
+    // Getting the secretkey from the appsettings.json
+    var tokenSettings = builder.Configuration.GetSection("TokenSettings");
+    var secretKey = tokenSettings["Secret"];
+
     options.RequireHttpsMetadata = false;
     options.SaveToken = true;
     options.TokenValidationParameters = new TokenValidationParameters
     {
         ValidateIssuerSigningKey = true,
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes("ToDoBackendSecretKey@324")),
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(secretKey)),
         ValidateIssuer = true,
         ValidateAudience = true,
         ValidIssuer = "https://localhost:7059",
@@ -39,9 +44,11 @@ builder.Services.AddSwaggerGen();
 
 // MongoDB
 builder.Services.Configure<MongoDBSettings>(builder.Configuration.GetSection("MongoDBSettings"));
-
 // GitHub
 builder.Services.Configure<GithubAuthSettings>(builder.Configuration.GetSection("GithubAuthSettings"));
+// Settings
+builder.Services.Configure<TokenSettings>(builder.Configuration.GetSection("TokenSettings"));
+
 builder.Services.AddSingleton<IUserRepository, UserRepository>();
 builder.Services.AddSingleton<ITokenService, TokenService>();
 builder.Services.AddSingleton<IGitHubLoginService, GitHubLoginService>();

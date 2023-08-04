@@ -6,15 +6,23 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using AuthBackend.Settings;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
 namespace AuthBackend.Services
 {
     public class TokenService : ITokenService
     {
+        private readonly TokenSettings _tokenSettings;
+
+        public TokenService(IOptions<TokenSettings> tokenSettings)
+        {
+            _tokenSettings = tokenSettings.Value;
+        }
+
         public string GenerateToken(string email)
         {
-            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("ToDoBackendSecretKey@324"));
+            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_tokenSettings.Secret));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
             var claims = new[]
@@ -41,7 +49,7 @@ namespace AuthBackend.Services
             var validationParameters = new TokenValidationParameters
             {
                 ValidateIssuerSigningKey = true,
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("ToDoBackendSecretKey@324")),
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_tokenSettings.Secret)),
                 ValidateIssuer = false,
                 ValidateAudience = false,
                 ClockSkew = TimeSpan.Zero
