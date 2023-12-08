@@ -18,7 +18,11 @@ export default function EditProfileForm({ onSubmit, user, error }) {
 		e.preventDefault();
 		// Once the user submits the form, the photo will be uploaded to the server and the url will be set to the formValues
 		// to store the url in the database
-		formValues.photo = await uploadAvatar(photo);
+		if (photo) {
+			formValues.photo = await uploadAvatar(photo);
+		} else {
+			formValues.photo = user?.photo;
+		}
 		onSubmit(formValues);
 	};
 
