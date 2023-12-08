@@ -4,18 +4,31 @@ import EditProfilePhoto from '../EditProfilePhoto/EditProfilePhoto';
 import FormInput from '../FormInput/FormInput';
 import FormTextarea from '../FormTextarea/FormTextarea';
 import './EditProfileForm.css';
+import { uploadAvatar } from '../../services/user-services';
 export default function EditProfileForm({ onSubmit, user, error }) {
 	const [formValues, setFormValues] = useState(new UserInfo( user?.name, user?.bio, user?.photo, user?.phone, user?.email, user?.password));
+	const [photo, setPhoto] = useState(null);
 
 	const handleChange = (newValue, e) => {
 		const { name } = e.target;
 		setFormValues({ ...formValues, [name]: newValue });
 	};
 
-	const handleSubmit = (e) => {
+	const handleSubmit = async (e) => {
 		e.preventDefault();
+		formValues.photo = await uploadAvatar(photo);
 		onSubmit(formValues);
 	};
+
+	const uploadPhoto = async (file) => {
+		const formData = new FormData();
+		formData.append('file', file);
+		formData.append('FileName', file.name);
+		formData.append('FileType', file.type);
+		formData.append('FolderName', 'ProfilePictures');
+		
+		setPhoto(formData);
+	}
 
 	// useEffect(() => {
 	// 	setFormValues(user);
@@ -24,7 +37,7 @@ export default function EditProfileForm({ onSubmit, user, error }) {
 	return (
 		<>
 			<form action='' className='form edit-form'>
-				<EditProfilePhoto onChange={handleChange} />
+				<EditProfilePhoto onChange={uploadPhoto} />
 
 				<FormInput
 					label='Name'

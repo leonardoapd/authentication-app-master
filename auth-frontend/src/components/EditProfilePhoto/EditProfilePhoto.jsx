@@ -8,6 +8,7 @@ export default function EditProfilePhoto({ onChange }) {
 	const [file, setFile] = useState(null);
 	const [error, setError] = useState('');
 	const { user, editUser } = useUser();
+	const [photo, setPhoto] = useState(null);
 
 	const handleChange = async (e, file) => {
 		const selectedFile = file === undefined ? e.target.files[0] : file;
@@ -28,9 +29,12 @@ export default function EditProfilePhoto({ onChange }) {
 
 		setError('');
 		setFile(selectedFile);
-		const imgURL = await uploadPhoto(selectedFile);
-		user.photo = imgURL;
-        onChange(imgURL, e);
+		const previewUrl = URL.createObjectURL(selectedFile);
+		setPhoto(previewUrl);
+		// const imgURL = await uploadPhoto(selectedFile);
+		// user.photo = imgURL;
+        // onChange(imgURL, e);
+		onChange(selectedFile);
 	};
 
 	const uploadPhoto = async (file) => {
@@ -46,7 +50,7 @@ export default function EditProfilePhoto({ onChange }) {
 	return (
 		<div className='edit-profile-photo'>
 			<div className='edit-profile-photo__container'>
-				<img src={user?.photo || images.user} alt='profile photo' className='edit-profile-photo__image' />
+				<img src={photo || user?.photo || images.user} alt='profile photo' className='edit-profile-photo__image' />
 				<input
 					className='edit-profile-photo__input'
 					title='profile photo'
