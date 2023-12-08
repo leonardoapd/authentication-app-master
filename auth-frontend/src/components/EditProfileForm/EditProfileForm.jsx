@@ -16,10 +16,13 @@ export default function EditProfileForm({ onSubmit, user, error }) {
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
+		// Once the user submits the form, the photo will be uploaded to the server and the url will be set to the formValues
+		// to store the url in the database
 		formValues.photo = await uploadAvatar(photo);
 		onSubmit(formValues);
 	};
 
+	// When the user selects a file, it will be set to the state
 	const uploadPhoto = async (file) => {
 		const formData = new FormData();
 		formData.append('file', file);
@@ -29,10 +32,6 @@ export default function EditProfileForm({ onSubmit, user, error }) {
 		
 		setPhoto(formData);
 	}
-
-	// useEffect(() => {
-	// 	setFormValues(user);
-	// }, [user]);
 
 	return (
 		<>

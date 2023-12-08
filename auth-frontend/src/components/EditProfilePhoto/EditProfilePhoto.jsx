@@ -29,22 +29,12 @@ export default function EditProfilePhoto({ onChange }) {
 
 		setError('');
 		setFile(selectedFile);
+		// Preview selected file in the browser
 		const previewUrl = URL.createObjectURL(selectedFile);
 		setPhoto(previewUrl);
-		// const imgURL = await uploadPhoto(selectedFile);
-		// user.photo = imgURL;
-        // onChange(imgURL, e);
-		onChange(selectedFile);
-	};
 
-	const uploadPhoto = async (file) => {
-		const formData = new FormData();
-		formData.append('file', file);
-		formData.append('FileName', file.name);
-        formData.append('FileType', file.type);
-        formData.append('FolderName', 'ProfilePictures');
-		
-		return await uploadAvatar(formData);
+		// Setting the file to the parent component
+		onChange(selectedFile);
 	};
 
 	return (
